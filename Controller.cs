@@ -30,7 +30,7 @@ namespace FishAuction
   class Controller
   {
     public int fishImageNumber;
-    public string maxSize;
+    public string info;
     IWebDriver _driver;
     WebDriverWait wait;
     Actions builder;
@@ -57,36 +57,40 @@ namespace FishAuction
       click("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[3]/center/input[1]");
       IList<IWebElement> textfields = _driver.FindElements(By.TagName("a"));
       //Here we itterate through all the links google has given us, and click the first instance of seriouslyfish. Other ways like class and xpath do not work. 
-      for (int i = 0; i < textfields.Count; i++)
+      try
       {
-        if (textfields[i].Text.Contains("https://www.seriouslyfish.com"))
+        for (int i = 0; i < textfields.Count; i++)
         {
-          textfields[i].Click();
-          break;
+          if (textfields[i].Text.Contains("https://www.seriouslyfish.com"))
+          {
+            textfields[i].Click();
+            break;
+          }
         }
       }
-      string source = wait.Until(e => e.FindElement(By.XPath("//*[@id='sidebar']/div/div[1]/div[2]/a/img"))).GetAttribute("src");
-      if(source.Contains(".jpg?"))
+      catch (Exception)
       { 
-      source = source.Split('?')[0];//split on the jpg file.
+      
       }
+
       // "//*[@id="sidebar"]/div/div[1]/div[2]/a/img"
       // //*[@id="sidebar"]/div/div[1]/div[2]/a/img
       // wait.Until(e => e.FindElement(By.XPath(xPath)))
       try
       {
+        string source = wait.Until(e => e.FindElement(By.XPath("//*[@id='sidebar']/div/div[1]/div[2]/a/img"))).GetAttribute("src");
+        if (source.Contains(".jpg?"))
+        {
+          source = source.Split('?')[0];//split on the jpg file.
+        }
         SaveImage(source, "fish", ImageFormat.Png);
       }
-      catch (ExternalException)
+      catch (Exception)
       {
         // Something is wrong with Format -- Maybe required Format is not 
         // applicable here
       }
-      catch (ArgumentNullException)
-      {
-        // Something wrong with Stream
-      }
-
+      info =  wait.Until(e => e.FindElement(By.ClassName("entry"))).Text.Trim();
     }
 
 
