@@ -4,7 +4,12 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 public static class WebDriverExtensions
@@ -48,7 +53,7 @@ namespace FishAuction
       inputText("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input", fishName + " site:www.seriouslyfish.com");
       click("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[3]/center/input[1]");
       IList<IWebElement> textfields = _driver.FindElements(By.TagName("a"));
-      IList<string> s = new List<string>();
+      //Here we itterate through all the links google has given us, and click the first instance of seriouslyfish. Other ways like class and xpath do not work. 
       for (int i = 0; i < textfields.Count; i++)
       {
         if (textfields[i].Text.Contains("https://www.seriouslyfish.com"))
@@ -57,7 +62,24 @@ namespace FishAuction
           break;
         }
       }
-      
+      string source = wait.Until(e => e.FindElement(By.XPath("//*[@id='sidebar']/div/div[1]/div[2]/a/img"))).GetAttribute("src");
+      // "//*[@id="sidebar"]/div/div[1]/div[2]/a/img"
+      // //*[@id="sidebar"]/div/div[1]/div[2]/a/img
+      // wait.Until(e => e.FindElement(By.XPath(xPath)))
+      try
+      {
+        SaveImage(source, "fish" , ImageFormat.Png );
+}
+      catch (ExternalException)
+      {
+        // Something is wrong with Format -- Maybe required Format is not 
+        // applicable here
+      }
+      catch (ArgumentNullException)
+      {
+        // Something wrong with Stream
+      }
+
     }
 
     /**
@@ -74,5 +96,13 @@ namespace FishAuction
       //https://www.selenium.dev/documentation/webdriver/waits/
       wait.Until(e => e.FindElement(By.ClassName(className))).Click();
   }
-}
+
+    public void SaveImage(string imageUrl, string filename, ImageFormat format)
+    {
+    //  "C:\Users\krais\Downloads\GSLASBAPBylaws (1).docx"
+      WebClient webClient = new WebClient();
+      webClient.DownloadFile(imageUrl, @"C:\\Users\\krais\\Downloads\\image.webp");
+      webClient.Dispose();
+    }
+  }
 }
