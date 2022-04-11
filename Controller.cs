@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 public static class WebDriverExtensions
 {
@@ -32,12 +33,17 @@ namespace FishAuction
     public int fishImageNumber;
     public string info;
     IWebDriver _driver;
+    IWebDriver _imageDriver;
     WebDriverWait wait;
+    WebDriverWait waitImage;
     Actions builder;
+    private string fishName;
     public Controller()
     {
+      _imageDriver = new ChromeDriver();
       _driver = new ChromeDriver();
       wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+      waitImage = new WebDriverWait(_imageDriver, TimeSpan.FromSeconds(5));
       builder = new Actions(_driver);
       fishImageNumber = 0;
     }
@@ -50,8 +56,25 @@ namespace FishAuction
       wait.Until(e => e.FindElement(By.XPath(xPath), 2000)).SendKeys(text);
 
     }
+
+    public void getImage()
+    {
+      try
+      {
+        _imageDriver.Navigate().GoToUrl("https://images.google.com/");
+        waitImage.Until(e => e.FindElement(By.XPath("//*[@id='sbtc']/div/div[2]/input"), 2000)).SendKeys(fishName);
+        waitImage.Until(e => e.FindElement(By.XPath("//*[@id='sbtc']/button"))).Click();
+      }
+      catch(Exception)
+      {
+        //This is to prevent program crashing , selenide is jank sometimes. 
+      }
+    }
     public void findFish(string fishName)
     {
+      this.fishName = fishName;
+      Thread thread = new Thread(getImage);
+      thread.Start();
       _driver.Navigate().GoToUrl("https://www.google.com");
       inputText("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input", fishName + " site:www.seriouslyfish.com");
       click("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[3]/center/input[1]");
