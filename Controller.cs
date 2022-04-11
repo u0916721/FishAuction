@@ -52,7 +52,7 @@ namespace FishAuction
     }
     public void findFish(string fishName)
     {
-      _driver.Navigate().GoToUrl("https://www.google.com/");
+      _driver.Navigate().GoToUrl("https://www.google.com");
       inputText("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input", fishName + " site:www.seriouslyfish.com");
       click("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[3]/center/input[1]");
       IList<IWebElement> textfields = _driver.FindElements(By.TagName("a"));
@@ -78,7 +78,7 @@ namespace FishAuction
       // wait.Until(e => e.FindElement(By.XPath(xPath)))
       try
       {
-        string source = wait.Until(e => e.FindElement(By.XPath("//*[@id='sidebar']/div/div[1]/div[2]/a/img"))).GetAttribute("src");
+        string source = wait.Until(e => e.FindElement(By.XPath("//*[@id='sidebar']/div/div[1]/div[2]/a/img"))).GetAttribute("src"); //Need more fixes for diffrents kinds of links!
         if (source.Contains(".jpg?"))
         {
           source = source.Split('?')[0];//split on the jpg file.
