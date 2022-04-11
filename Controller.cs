@@ -32,6 +32,7 @@ namespace FishAuction
   {
     public int fishImageNumber;
     public string info;
+    public FishModel currentFish;
     IWebDriver _driver;
     IWebDriver _imageDriver;
     WebDriverWait wait;
@@ -46,6 +47,7 @@ namespace FishAuction
       waitImage = new WebDriverWait(_imageDriver, TimeSpan.FromSeconds(5));
       builder = new Actions(_driver);
       fishImageNumber = 0;
+      currentFish = new FishModel();
     }
     /**
 * I dont want to copy paste the same code over and over again so im wrapping it in a helper
@@ -56,7 +58,10 @@ namespace FishAuction
       wait.Until(e => e.FindElement(By.XPath(xPath), 2000)).SendKeys(text);
 
     }
-
+    /*
+     * Searches on google images in the other browser.
+     * 
+     */
     public void getImage()
     {
       try
@@ -99,21 +104,22 @@ namespace FishAuction
       // "//*[@id="sidebar"]/div/div[1]/div[2]/a/img"
       // //*[@id="sidebar"]/div/div[1]/div[2]/a/img
       // wait.Until(e => e.FindElement(By.XPath(xPath)))
-      try
-      {
-        string source = wait.Until(e => e.FindElement(By.XPath("//*[@id='sidebar']/div/div[1]/div[2]/a/img"))).GetAttribute("src"); //Need more fixes for diffrents kinds of links!
-        if (source.Contains(".jpg?"))
-        {
-          source = source.Split('?')[0];//split on the jpg file.
-        }
-        SaveImage(source, "fish", ImageFormat.Png);
-      }
-      catch (Exception)
-      {
+     // try
+      //{
+       // string source = wait.Until(e => e.FindElement(By.XPath("//*[@id='sidebar']/div/div[1]/div[2]/a/img"))).GetAttribute("src"); //Need more fixes for diffrents kinds of links!
+       // if (source.Contains(".jpg?"))
+       // {
+         // source = source.Split('?')[0];//split on the jpg file.
+        //}
+        //SaveImage(source, "fish", ImageFormat.Png);
+     // }
+      //catch (Exception)
+      //{
         // Something is wrong with Format -- Maybe required Format is not 
         // applicable here
-      }
+      //}
       info =  wait.Until(e => e.FindElement(By.ClassName("entry"))).Text.Trim();
+      currentFish.setValues(info);
     }
 
 

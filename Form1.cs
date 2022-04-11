@@ -25,12 +25,8 @@ namespace FishAuction
     {
 
       controller.findFish(fishToFind.Text);
-      var image = Image.FromFile(@"C:\\Users\\krais\\Downloads\\fishImage" + (controller.fishImageNumber - 1) + ".jpg");
-      fishPicture.Image = image;
-      richTextBox1.Text = controller.info;
-      loadingLable.Visible = false;
-      loadingBox.Visible = false;
-
+     // loadingLable.Visible = false;
+     // loadingBox.Visible = false;
     }
     private void search_Click(object sender, EventArgs e)
     {
@@ -113,10 +109,18 @@ namespace FishAuction
         label1.Text = @"The user cancelled the operation";
       else
         label1.Text = @"operation done";
-
-      richTextBox1.Text = controller.info;
       loadingLable.Visible = false;
       loadingBox.Visible = false;
+      distBox.Text = controller.currentFish.distribution;
+      habitatBox.Text = controller.currentFish.habitat;
+      maxLengthBox.Text = controller.currentFish.maxStandardLength;
+      maintBox.Text = controller.currentFish.maintenance;
+      tempBox.Text = controller.currentFish.waterContions;
+      dietBox.Text = controller.currentFish.diet;
+      behaveBox.Text = controller.currentFish.behaviour;
+      sexBox.Text = controller.currentFish.dimorphism;
+      repoBox.Text = controller.currentFish.reproduction;
+      factBox.Text = controller.currentFish.otherInfo;
 
     }
 
@@ -152,6 +156,16 @@ namespace FishAuction
     }
 
     private void loadingBox_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void label4_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void label10_Click(object sender, EventArgs e)
     {
 
     }
