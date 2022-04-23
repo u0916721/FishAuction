@@ -63,53 +63,54 @@ namespace FishAuction
      */
     public void setValues(string s)
     {
+      this.clear();
       string[] info = s.Split('\n');
       //Disgusting for loop, but we have to check for all these strings and set the string above accodingly.
       for (int i = 0; i < s.Length; i++)
       {
         //Switch case is probably better but I hate dealing with c# syntax
-        if (info[i].ToLower().Contains("distribution")) //Not going to deal with varience in case
+        if (info[i].ToLower().Trim().Equals("distribution")) //Not going to deal with varience in case
         {
           this.distribution = info[i + 1];
           continue;
         }
-        else if (info[i].ToLower().Contains("habitat")) //Not going to deal with varience in case
+        else if (info[i].ToLower().Trim().Equals("habitat")) //Not going to deal with varience in case
         {
           this.habitat = info[i + 1];
         }
-        else if (info[i].ToLower().Contains("maximum standard length")) //Not going to deal with varience in case
+        else if (info[i].ToLower().Trim().Equals("maximum standard length")) //Not going to deal with varience in case
         {
           this.maxStandardLength = info[i + 1]; //HELPER METHOD GOES HERE TO CONVERT MM TO INCHES
         }
-        else if (info[i].ToLower().Contains("aquarium size")) //Not going to deal with varience in case
+        else if (info[i].ToLower().Trim().Equals("aquarium size")) //Not going to deal with varience in case
         {
           this.aquariumSize = info[i + 2]; //Skip pass the top section
         }
-        else if (info[i].ToLower().Contains("maintenance")) //Not going to deal with varience in case
+        else if (info[i].ToLower().Trim().Equals("maintenance")) //Not going to deal with varience in case
         {
           this.maintenance = info[i + 1];
         }
-        else if (info[i].ToLower().Contains("water conditions")) //Not going to deal with varience in case
+        else if (info[i].ToLower().Trim().Equals("water conditions")) //Not going to deal with varience in case
         {
           this.waterContions = info[i + 1];
         }
-        else if (info[i].ToLower().Contains("diet")) //Not going to deal with varience in case
+        else if (info[i].ToLower().Trim().Equals("diet")) //Not going to deal with varience in case
         {
           this.diet = info[i + 1];
         }
-        else if (info[i].ToLower().Contains("behaviour and compatibility")) //Not going to deal with varience in case
+        else if (info[i].ToLower().Trim().Equals("behaviour and compatibility")) //Not going to deal with varience in case
         {
           this.behaviour = info[i + 2]; //Skip top
         }
-        else if (info[i].ToLower().Contains("sexual dimorphism")) //Not going to deal with varience in case
+        else if (info[i].ToLower().Trim().Equals("sexual dimorphism")) //Not going to deal with varience in case
         {
           this.dimorphism = info[i + 1];
         }
-        else if (info[i].ToLower().Contains("reproduction")) //Not going to deal with varience in case
+        else if (info[i].ToLower().Trim().Equals("reproduction")) //Not going to deal with varience in case
         {
           this.reproduction = info[i + 1];
         }
-        else if (info[i].ToLower().Contains("notes")) //Not going to deal with varience in case
+        else if (info[i].ToLower().Trim().Equals("notes")) //Not going to deal with varience in case
         {
           this.otherInfo = info[i + 2];
         }

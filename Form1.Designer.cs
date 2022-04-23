@@ -29,6 +29,7 @@ namespace FishAuction
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
       this.search = new System.Windows.Forms.Button();
       this.fishToFind = new System.Windows.Forms.TextBox();
       this.label1 = new System.Windows.Forms.Label();
@@ -321,6 +322,8 @@ namespace FishAuction
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.BackColor = System.Drawing.SystemColors.ControlLight;
+      this.BackgroundImage = global::FishAuction.Properties.Resources.amazon_river_tilt_shift_wallpaper_2400x1350;
       this.ClientSize = new System.Drawing.Size(1782, 1040);
       this.Controls.Add(this.loadingLable);
       this.Controls.Add(this.loadingBox);
@@ -347,8 +350,9 @@ namespace FishAuction
       this.Controls.Add(this.label1);
       this.Controls.Add(this.fishToFind);
       this.Controls.Add(this.search);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "Form1";
-      this.Text = "Form1";
+      this.Text = "GSLAS Auction Betta Version";
       this.Load += new System.EventHandler(this.Form1_Load);
       this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
       ((System.ComponentModel.ISupportInitialize)(this.loadingBox)).EndInit();
